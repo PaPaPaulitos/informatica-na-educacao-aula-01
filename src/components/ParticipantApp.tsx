@@ -1,17 +1,13 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState, type ReactNode } from "react";
-import { getOrCreateParticipantId, useAppState } from "@/lib/hooks";
+import { FormEvent, useMemo, useState, type ReactNode } from "react";
+import { useAppState, useParticipantId } from "@/lib/hooks";
 import { THEORIES } from "@/lib/theories";
 import type { PublicState, TheoryId } from "@/lib/types";
 
 export function ParticipantApp() {
   const { state, error, loading, setState } = useAppState();
-  const [participantId, setParticipantId] = useState("");
-
-  useEffect(() => {
-    setParticipantId(getOrCreateParticipantId());
-  }, []);
+  const participantId = useParticipantId();
 
   const mine = useMemo(
     () => state?.responses.find((r) => r.id === participantId),
