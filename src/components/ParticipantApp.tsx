@@ -6,7 +6,7 @@ import { THEORIES } from "@/lib/theories";
 import type { PublicState, TheoryId } from "@/lib/types";
 
 export function ParticipantApp() {
-  const { state, error, loading, setState } = useAppState();
+  const { state, error, loading, applyState } = useAppState();
   const participantId = useParticipantId();
 
   const mine = useMemo(
@@ -17,23 +17,24 @@ export function ParticipantApp() {
   if (loading || !state || !participantId) {
     return (
       <Shell>
-        <p className="status-line">Carregando a aula…</p>
+        {error ? (
+          <p className="status-line error">{error}</p>
+        ) : (
+          <p className="status-line">Carregando a aula…</p>
+        )}
       </Shell>
     );
   }
 
-  if (error) {
-    return (
-      <Shell>
-        <p className="status-line error">{error}</p>
-      </Shell>
-    );
-  }
+  const errorBanner = error ? (
+    <p className="status-line error">{error}</p>
+  ) : null;
 
   if (state.phase === "question1") {
     if (mine?.question1) {
       return (
         <Shell>
+          {errorBanner}
           <WaitingPanel
             color={mine.color}
             title="Resposta enviada"
@@ -46,8 +47,9 @@ export function ParticipantApp() {
 
     return (
       <Shell>
+        {errorBanner}
         <QuestionOneForm
-          onSubmitted={(next) => setState(next)}
+          onSubmitted={applyState}
           participantId={participantId}
         />
       </Shell>
@@ -58,6 +60,7 @@ export function ParticipantApp() {
   if (!mine?.question1) {
     return (
       <Shell>
+        {errorBanner}
         <WaitingPanel
           title="Aula em andamento"
           body="A primeira pergunta já foi encerrada. Você chegou depois do início — acompanhe pelo dashboard."
@@ -69,6 +72,7 @@ export function ParticipantApp() {
   if (mine.question2) {
     return (
       <Shell>
+        {errorBanner}
         <WaitingPanel
           color={mine.color}
           title="Obrigado!"
@@ -81,10 +85,11 @@ export function ParticipantApp() {
 
   return (
     <Shell>
+      {errorBanner}
       <QuestionTwoForm
         color={mine.color}
         knowledge={mine.question1}
-        onSubmitted={(next) => setState(next)}
+        onSubmitted={applyState}
         participantId={participantId}
       />
     </Shell>

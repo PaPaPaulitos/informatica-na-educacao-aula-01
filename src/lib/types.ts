@@ -17,11 +17,13 @@ export interface Response {
 
 export interface AppState {
   phase: Phase;
+  revision: number;
   responses: Response[];
 }
 
 export interface PublicState {
   phase: Phase;
+  revision: number;
   responses: Array<{
     id: string;
     color: string;
