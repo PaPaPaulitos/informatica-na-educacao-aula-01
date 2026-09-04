@@ -17,11 +17,13 @@ export interface Response {
 
 export interface AppState {
   phase: Phase;
+  revision: number;
   responses: Response[];
 }
 
 export interface PublicState {
   phase: Phase;
+  revision: number;
   responses: Array<{
     id: string;
     color: string;
@@ -33,4 +35,5 @@ export interface PublicState {
     question1: number;
     question2: number;
   };
+  persistence?: "redis" | "memory";
 }

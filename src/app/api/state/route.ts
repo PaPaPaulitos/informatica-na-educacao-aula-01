@@ -1,12 +1,9 @@
-import { NextResponse } from "next/server";
-import { getPublicState, usingRedis } from "@/lib/store";
+import { jsonNoStore } from "@/lib/http";
+import { getPublicState } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
-  const state = await getPublicState();
-  return NextResponse.json({
-    ...state,
-    persistence: usingRedis() ? "redis" : "memory",
-  });
+  return jsonNoStore(await getPublicState());
 }
