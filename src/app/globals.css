@@ -225,6 +225,12 @@ textarea:focus {
   color: var(--danger);
 }
 
+.status-line.warn {
+  color: var(--amber);
+  padding: 0 0 1rem;
+  text-align: left;
+}
+
 .status-line {
   position: relative;
   z-index: 1;

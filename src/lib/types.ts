@@ -35,4 +35,5 @@ export interface PublicState {
     question1: number;
     question2: number;
   };
+  persistence?: "redis" | "memory";
 }

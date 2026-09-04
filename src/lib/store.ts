@@ -170,6 +170,7 @@ export function toPublicState(state: AppState): PublicState {
       question1: state.responses.length,
       question2: state.responses.filter((r) => Boolean(r.question2)).length,
     },
+    persistence: usingRedis() ? "redis" : "memory",
   };
 }
 

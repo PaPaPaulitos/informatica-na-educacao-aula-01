@@ -145,6 +145,14 @@ export function DashboardApp() {
         <p className="status-line error">{actionError ?? error}</p>
       )}
 
+      {state.persistence === "memory" ? (
+        <p className="status-line warn">
+          Esta sessão está só na memória deste servidor. Em produção na Vercel,
+          conecte o Upstash Redis para a turma inteira ver o mesmo avanço de
+          pergunta.
+        </p>
+      ) : null}
+
       {visibleScreen === "question1" ? (
         <section className="wall-section animate-rise">
           <div className="wall-intro">
